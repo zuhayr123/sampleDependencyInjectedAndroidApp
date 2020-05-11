@@ -39,7 +39,7 @@ class GameDataViewModel@Inject constructor(
     init{
         results = Transformations.switchMap(apiCall){
             when(apiCall.value){
-                "login" -> {
+                "available" -> {
                     repository.insertGameData(gameId = "123", data = gameData)
                 }
                 else -> {

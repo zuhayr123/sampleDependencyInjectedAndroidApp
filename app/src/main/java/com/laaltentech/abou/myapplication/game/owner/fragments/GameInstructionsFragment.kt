@@ -46,6 +46,7 @@ class GameInstructionsFragment : Fragment(), Injectable {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         viewModelInit()
+        newGameDataViewModel.apiCall.value = "available"
         super.onActivityCreated(savedInstanceState)
     }
 
