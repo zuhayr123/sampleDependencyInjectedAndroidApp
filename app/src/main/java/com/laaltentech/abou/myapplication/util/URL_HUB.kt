@@ -2,7 +2,7 @@ package com.laaltentech.abou.myapplication.util
 
 class URL_HUB{
     companion object{
-        val BASE_URL = "https://subhash-industiries-api.herokuapp.com/api/"
+        val BASE_URL = "https://the-new-game.herokuapp.com/api/"
         val PIC_UPLOAD_URL = "https://subhash-industiries-api.herokuapp.com/file"
         val INSERT_GAME_DATA = "game_data"
         val POST_USER_DETAILS = BASE_URL +"users"

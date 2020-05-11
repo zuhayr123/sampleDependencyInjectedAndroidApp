@@ -15,7 +15,7 @@ class GameData{
     var name: String? = "Zuhayr"
 
     @SerializedName("score")
-    var score: String? = null
+    var score: String? = "100"
 
     @SerializedName("game_details")
     var individualScores: List<IndividualGameScore>? = null

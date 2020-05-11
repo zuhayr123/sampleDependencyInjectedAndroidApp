@@ -9,7 +9,7 @@ class GameDataResponse{
     @SerializedName("msg")
     var game_id: String? = null
 
-    @SerializedName("game_data")
+    @SerializedName("gameData")
     var gameData: GameData? = null
 
     @SerializedName("status")
