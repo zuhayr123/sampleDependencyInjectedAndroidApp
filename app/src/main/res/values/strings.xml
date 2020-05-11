@@ -1,0 +1,93 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="title_activity_welcome">Home Screen</string>
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+    <string name="slide_1_title">Daily Workout</string>
+    <string name="slide_1_desc">Set your daily workout routine by the help of trainer</string>
+    <string name="slide_2_title">Meditation Techniques </string>
+    <string name="slide_2_desc">Learn about the different meditation techniques and practice them</string>
+    <string name="slide_3_title">Diet Chart</string>
+    <string name="slide_3_desc">Make your diet chart by the help of health experts</string>
+    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
+    <string name="play_again">Play Again</string>
+    <string name="login">Login</string>
+    <string name="reg_name_hint">Registered Phone Number</string>
+    <string name="hint_password">Password</string>
+    <string name="btn_submit">Submit</string>
+    <string name="reg_name">Name</string>
+    <string name="reg_phone_number">Phone number</string>
+    <string name="reg_email_id">Email Id</string>
+    <string name="reg_id_card_number">ID Card Number</string>
+    <string name="reg_id_card_type">ID card type</string>
+    <string name="reg_photo">Photo of the Id Card</string>
+    <string name="reg_photo_of_the_user">Photo of the User</string>
+    <string name="sign_up">Signup</string>
+    <string name="elon_musk">Elon Musk</string>
+    <string name="tracking">Tracking</string>
+    <string name="str_or">OR</string>
+    <string name="call_driver">Call Driver</string>
+    <string name="vehicle_tap_caps">VEHICLE TAP</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="school_name">School name</string>
+    <string name="student_registration">STUDENT REGISTRATION</string>
+    <string name="parent_registration">PARENT REGISTRATION</string>
+    <string name="house_number_street_name">House Number/ Street Name</string>
+    <string name="district">District</string>
+    <string name="state">State</string>
+    <string name="your_pickup_location">Your PickUp Location</string>
+    <string name="current_address">Your current address is:</string>
+    <string name="edit_address">Edit Address</string>
+    <string name="edit_location">Edit Location</string>
+    <string name="done">Done</string>
+    <string name="pin_code">Pin code</string>
+    <string name="change_address">Change Address</string>
+    <string name="profile">Profile</string>
+    <string name="settings">Settings</string>
+    <string name="communicate">Communicate</string>
+    <string name="about_us">About Us</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="vehicle_tap">VEHICLE TAP</string>
+    <string name="worried_about_your_child_s_safety">Worried about your child\'s safety?</string>
+    <string name="tracking_text">We track a custom built device embedded in the school bus that gives you live location of your child irrespective of weather the location has internet connectivity or not.</string>
+    <string name="sign_up_text">Simply sign up with our app and we will make sure that you have every detail about your child\'s wellness all the time.</string>
+    <string name="relax_text">Sit back and relax , we\'ve got it.</string>
+    <string name="stressting_text">It is normally very stressing when your kid is at school and for some reason the bus driver is delayed at dropping your kid at home, there\'s no way to track the problem or to find out if the your ward is safe.</string>
+    <string name="vehicle_tap_does_this_text">But now with Vehicle Tap you can track not only buses but the exact time when your kid boarded the bus and where the bus is exactly right now.</string>
+    <string name="loading">Loading...</string>
+    <string name="loader_traffic">traffic_lights.json</string>
+    <string name="loader_man_walking">man_with_headphones_casully_walking.json</string>
+    <string name="loader_infinity">infinity_loader.json</string>
+    <string name="loader_circulating_circle">circulating_circle_loader.json</string>
+    <string name="furnace_temperature">Furnace Temperature</string>
+    <string name="motor_rpm">Motor RPM</string>
+    <string name="coal_level">Coal Level</string>
+
+    <string-array name="loader_array">
+        <item>@string/loader_circulating_circle</item>
+        <item>@string/loader_infinity</item>
+        <item>@string/loader_man_walking</item>
+        <item>@string/loader_traffic</item>
+    </string-array>
+    <string name="title_activity_bottom_main">BottomMainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="user_registration">USER REGISTRATION</string>
+    <string name="confirm_password">Confirm Password</string>
+
+
+    <string name="day_date_format">EEEE, MMM dd yyyy</string>
+    <string name="date_format_past">MMM dd, hh:mm aa</string>
+    <string name="day_format_long">EEEE, MMMM dd, yyyy</string>
+    <string name="time_format">hh:mm aa</string>
+    <string name="hour_min_full">HH:mm</string>
+
+
+    <string name="date_time_format">EEEE, MMM dd, yyyy hh:mm aa</string>
+    <string name="simple_date">dd/MM/yyyy</string>
+    <string name="simple_date_time">dd/MM/yyyy hh:mm a</string>
+    <string name="week_lower_only">week</string>
+
+</resources>
