@@ -32,9 +32,9 @@ class DaoModule {
 
 //    -----------------------------------------ADD DAOS HERE-------------------------------------------------------------------
 
-//    @Provides
-//    @Singleton
-//    fun provideFlickDAO(database: MasterDatabase) = database.flickDAO() //todo add Dao here in future
+    @Provides
+    @Singleton
+    fun provideFlickDAO(database: MasterDatabase) = database.gameDAO() //todo add Dao here in future
 
     @Provides
     @Singleton

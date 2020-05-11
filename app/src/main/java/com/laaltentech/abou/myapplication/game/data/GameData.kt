@@ -18,5 +18,5 @@ class GameData{
     var score: String? = null
 
     @SerializedName("game_details")
-    var custPhoto: List<IndividualGameScore>? = null
+    var individualScores: List<IndividualGameScore>? = null
 }
