@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.laaltentech.abou.myapplication">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+
     <application
         android:name=".util.AppController"
         android:allowBackup="true"
@@ -18,6 +22,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
+        <receiver android:name=".game.owner.alarmReceiver.AlarmReceiverFunctions"
+            android:enabled="true"
+            android:exported="true">
+
+        </receiver>
+
+        <service
+            android:name=".util.LocationService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
     </application>
 
 </manifest>
