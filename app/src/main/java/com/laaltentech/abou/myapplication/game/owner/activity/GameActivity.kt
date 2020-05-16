@@ -31,8 +31,8 @@ class GameActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
         val calendar: Calendar = Calendar.getInstance().apply {
             timeInMillis = System.currentTimeMillis()
-            set(Calendar.HOUR_OF_DAY, 0)
-            set(Calendar.MINUTE, 55)
+            set(Calendar.HOUR_OF_DAY, 3)
+            set(Calendar.MINUTE, 9)
         }
 
         setAlarm(calendar.timeInMillis)

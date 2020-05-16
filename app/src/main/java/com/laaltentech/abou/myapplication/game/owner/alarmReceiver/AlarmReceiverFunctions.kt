@@ -1,27 +1,27 @@
 package com.laaltentech.abou.myapplication.game.owner.alarmReceiver
 
 import android.annotation.SuppressLint
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
 import android.location.Location
 import android.location.LocationListener
-import android.media.MediaPlayer
-import android.provider.Settings
+import android.location.LocationManager
+import android.os.Bundle
 import android.util.Log
 import okhttp3.*
 import java.io.IOException
-import android.location.LocationManager
-import android.os.Bundle
-import android.os.IBinder
-import androidx.core.content.ContextCompat.*
-import com.laaltentech.abou.myapplication.util.LocationService
-import android.R.attr.name
-
-
 
 
 class AlarmReceiverFunctions : BroadcastReceiver(), LocationListener {
+
+    lateinit var location : Location
+
     override fun onLocationChanged(p0: Location?) {
-        Log.e("TAG", "location is lat : ${p0?.latitude } and lon is : ${p0?.longitude}")
+        if(p0 != null) {
+            location = p0
+            Log.e("TAG", "location is lat : ${p0.latitude} and lon is : ${p0.longitude}")
+        }
     }
 
     override fun onStatusChanged(p0: String?, p1: Int, p2: Bundle?) {
@@ -37,33 +37,24 @@ class AlarmReceiverFunctions : BroadcastReceiver(), LocationListener {
 
     }
 
-    private lateinit var mService: LocationService
-
-    private val connection = object : ServiceConnection {
-        override fun onServiceDisconnected(p0: ComponentName?) {
-        }
-
-        override fun onServiceConnected(p0: ComponentName?, p1: IBinder?) {
-            val binder = p1 as LocationService.LocalBinder
-            mService = binder.getService()
-        }
-    }
-
     @SuppressLint("MissingPermission")
     override fun onReceive(p0: Context?, p1: Intent?) {
 
-        p1.also { intent ->
-//            p0?.bindService(intent, connection, Context.BIND_AUTO_CREATE)
+        p1.also {
             val locationManager: LocationManager = p0?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0f, this)
+
             val location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+            if(location != null){
+                this.location = location
+            }
+            else{
+                this.location.latitude = 0.0000
+                this.location.longitude = 0.0000
+            }
+
             Log.e("TAG", "lat is ${location?.latitude} and longitude is : ${location?.longitude}")
         }
-
-//        val mediaPlayer : MediaPlayer = MediaPlayer.create(p0, Settings.System.DEFAULT_RINGTONE_URI)
-//        mediaPlayer.start()
-
-
         Log.e("ALARM WAS FIRED", "THIS ALARM WAS FIRED")
         testPost()
     }
@@ -71,10 +62,10 @@ class AlarmReceiverFunctions : BroadcastReceiver(), LocationListener {
     fun testPost(){
         val okHttpClient = OkHttpClient()
         val requestBody = FormBody.Builder()
-            .add("driver_id", "some_email")
-            .add("latitude", "82")
-            .add("longitude", "723")
-            .add("timestamp", "some_password")
+            .add("driver_id", "test ID")
+            .add("latitude", location.latitude.toString())
+            .add("longitude", location.longitude.toString())
+            .add("timestamp", System.currentTimeMillis().toString())
             .build()
 
         val request = Request.Builder()
@@ -88,7 +79,7 @@ class AlarmReceiverFunctions : BroadcastReceiver(), LocationListener {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                Log.e("success", "failed to push")
+                Log.e("success", "the details were successfully posted")
                 // Handle this
             }
         })
