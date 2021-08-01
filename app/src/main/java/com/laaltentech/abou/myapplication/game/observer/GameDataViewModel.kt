@@ -19,6 +19,10 @@ class GameDataViewModel@Inject constructor(
     var executors: AppExecutors
 ) : ViewModel(), Observable {
 
+    companion object{
+        val email = "email"
+    }
+
     val apiCall = MutableLiveData<String>()
     var gameData = GameData()
     var results: LiveData<Resource<GameDataWithIndividualRelation>>

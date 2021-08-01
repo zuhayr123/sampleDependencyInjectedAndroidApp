@@ -90,4 +90,8 @@
     <string name="simple_date_time">dd/MM/yyyy hh:mm a</string>
     <string name="week_lower_only">week</string>
 
+    <string name="facebook_app_id">1324581714602976</string>
+    <string name="fb_login_protocol_scheme">fb1324581714602976</string>
+
+
 </resources>
