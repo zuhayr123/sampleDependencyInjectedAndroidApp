@@ -13,7 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
+import com.facebook.AccessToken
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -23,12 +23,11 @@ import com.laaltentech.abou.myapplication.R
 import com.laaltentech.abou.myapplication.databinding.FragmentGameCentralInstructionsBinding
 import com.laaltentech.abou.myapplication.di.Injectable
 import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel
-import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.accessToken
 import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.email
-import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.userId
 import com.laaltentech.abou.myapplication.network.Status
 import com.laaltentech.abou.myapplication.util.AppExecutors
 import javax.inject.Inject
+
 
 class GameInstructionsFragment : Fragment(), Injectable {
 
@@ -47,7 +46,6 @@ class GameInstructionsFragment : Fragment(), Injectable {
             .get(GameDataViewModel::class.java)
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -64,6 +62,17 @@ class GameInstructionsFragment : Fragment(), Injectable {
         binding.loginButton.fragment = this
 
         binding.loginButton.setReadPermissions(listOf(email))
+
+
+        val accessToken = AccessToken.getCurrentAccessToken()
+        val isLoggedIn = accessToken != null && !accessToken.isExpired
+
+        if(isLoggedIn){
+            val action = GameInstructionsFragmentDirections.actionViewDetailsToFacebookProfileFragment(accessToken?.token.toString(), accessToken?.userId.toString())
+            findNavController().navigate(action)
+        }
+
+        Log.e("LOGIN STATUS", "status of login can be seen as $isLoggedIn")
 
         binding.loginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult>{
             override fun onSuccess(result: LoginResult?) {

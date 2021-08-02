@@ -10,7 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.facebook.AccessToken
+import com.facebook.AccessTokenTracker
 import com.google.gson.Gson
 import com.laaltentech.abou.myapplication.R
 import com.laaltentech.abou.myapplication.databinding.FragmentAndroidProfileBinding
@@ -21,6 +24,7 @@ import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Compan
 import com.laaltentech.abou.myapplication.network.Status
 import com.laaltentech.abou.myapplication.util.AppExecutors
 import javax.inject.Inject
+
 
 class FacebookProfileFragment: Fragment(), Injectable {
 
@@ -57,6 +61,18 @@ class FacebookProfileFragment: Fragment(), Injectable {
 
         binding.profileViewModel = newGameDataViewModel
 
+        val accessTokenTracker = object : AccessTokenTracker() {
+            override fun onCurrentAccessTokenChanged(
+                oldAccessToken: AccessToken?,
+                currentAccessToken: AccessToken?
+            ) {
+                if(currentAccessToken == null){
+                    findNavController().popBackStack()
+                }
+                Log.e("LOGIN STATE", "STATUS CHANGED, $currentAccessToken")
+            }
+        }
+
         super.onActivityCreated(savedInstanceState)
     }
 
@@ -65,6 +81,7 @@ class FacebookProfileFragment: Fragment(), Injectable {
             it.results.observe(viewLifecycleOwner, Observer { item ->
                 when(item.status){
                     Status.SUCCESS -> {
+                        binding.progress.visibility = View.GONE
                         newGameDataViewModel.data = item.data
                         Glide.with(binding.root).load(newGameDataViewModel.data?.url).into(binding.profileImageView)
                         newGameDataViewModel.notifyChange()
@@ -72,10 +89,12 @@ class FacebookProfileFragment: Fragment(), Injectable {
                     }
 
                     Status.LOADING -> {
+                        binding.progress.visibility = View.VISIBLE
                         Log.e("TAG", "Data fetch Loading ${Gson().toJson(item.data)}")
                     }
 
                     Status.ERROR -> {
+                        binding.progress.visibility = View.GONE
                         Log.e("TAG", "Data fetch error")
                     }
                 }
