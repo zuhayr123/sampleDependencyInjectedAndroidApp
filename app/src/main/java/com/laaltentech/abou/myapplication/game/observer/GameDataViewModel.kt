@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.laaltentech.abou.myapplication.game.data.FacebookProfileData
 import com.laaltentech.abou.myapplication.game.data.GameData
 import com.laaltentech.abou.myapplication.game.data.GameDataWithIndividualRelation
 import com.laaltentech.abou.myapplication.game.repository.GameDataRepository
@@ -21,11 +22,15 @@ class GameDataViewModel@Inject constructor(
 
     companion object{
         val email = "email"
+        var userId : String = ""
+        var accessToken: String = ""
+        var isInternet = true
     }
 
     val apiCall = MutableLiveData<String>()
-    var gameData = GameData()
-    var results: LiveData<Resource<GameDataWithIndividualRelation>>
+    var results: LiveData<Resource<FacebookProfileData>>
+
+
 
     private val callbacks: PropertyChangeRegistry by lazy { PropertyChangeRegistry() }
 
@@ -44,7 +49,7 @@ class GameDataViewModel@Inject constructor(
         results = Transformations.switchMap(apiCall){
             when(apiCall.value){
                 "available" -> {
-                    repository.insertGameData(gameId = "123", data = gameData)
+                    repository.fetchProfileData(userID = userId, accessToken = accessToken, isInternet = isInternet)
                 }
                 else -> {
                     AbsentLiveData.create()

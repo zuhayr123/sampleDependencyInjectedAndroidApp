@@ -15,17 +15,17 @@ import androidx.lifecycle.ViewModelProviders
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
-import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.gson.Gson
 import com.laaltentech.abou.myapplication.R
 import com.laaltentech.abou.myapplication.databinding.FragmentGameCentralInstructionsBinding
 import com.laaltentech.abou.myapplication.di.Injectable
 import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel
+import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.accessToken
 import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.email
+import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.userId
 import com.laaltentech.abou.myapplication.network.Status
 import com.laaltentech.abou.myapplication.util.AppExecutors
-import java.util.*
 import javax.inject.Inject
 
 class GameInstructionsFragment : Fragment(), Injectable {
@@ -59,14 +59,17 @@ class GameInstructionsFragment : Fragment(), Injectable {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         viewModelInit()
-//        newGameDataViewModel.apiCall.value = "available"
         binding.loginButton.fragment = this
 
         binding.loginButton.setReadPermissions(listOf(email))
 
         binding.loginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult>{
             override fun onSuccess(result: LoginResult?) {
-                Log.e("JSON DATA", "Data is ${Gson().toJson(result)}")
+                accessToken = result?.accessToken?.token!!
+                userId = result.accessToken?.userId!!
+                newGameDataViewModel.apiCall.value = "available"
+
+                Log.e("Json Data Test : ", "The data being sent from the ${Gson().toJson(result)}")
 
                 Toast.makeText(context, "Login successful", Toast.LENGTH_LONG).show()
             }

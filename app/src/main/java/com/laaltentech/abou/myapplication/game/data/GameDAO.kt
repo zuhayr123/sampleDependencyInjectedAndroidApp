@@ -13,4 +13,10 @@ interface GameDAO{
 
     @Query("SELECT * FROM GameData WHERE game_id = :gameId")
     fun loadAll(gameId : String) : LiveData<GameDataWithIndividualRelation>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertFacebookProfileData(facebookProfileData: FacebookProfileData)
+
+    @Query("SELECT * FROM FacebookProfileData WHERE id = :userId")
+    fun fetchFacebookProfile(userId : String) : LiveData<FacebookProfileData>
 }
