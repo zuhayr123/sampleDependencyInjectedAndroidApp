@@ -27,6 +27,8 @@ class GameDataViewModel@Inject constructor(
         var isInternet = true
     }
 
+    var data : FacebookProfileData? = FacebookProfileData()
+
     val apiCall = MutableLiveData<String>()
     var results: LiveData<Resource<FacebookProfileData>>
 

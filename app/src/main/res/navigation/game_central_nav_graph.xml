@@ -9,7 +9,22 @@
         android:id="@+id/viewDetails"
         android:name="com.laaltentech.abou.myapplication.game.owner.fragments.GameInstructionsFragment"
         android:label="Details"
-        tools:layout="@layout/activity_game_central">
+        tools:layout="@layout/fragment_game_central_instructions">
+        <action
+            android:id="@+id/action_viewDetails_to_facebookProfileFragment"
+            app:destination="@id/facebookProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/facebookProfileFragment"
+        android:name="com.laaltentech.abou.myapplication.game.owner.fragments.FacebookProfileFragment"
+        android:label="FacebookProfileFragment"
+        tools:layout="@layout/fragment_android_profile">
+        <argument
+            android:name="token"
+            app:argType="string"/>
+        <argument
+            android:name="userId"
+            app:argType="string"/>
     </fragment>
 
 </navigation>
