@@ -38,6 +38,8 @@ class FacebookProfileFragment: Fragment(), Injectable {
 
     lateinit var binding: FragmentAndroidProfileBinding
 
+    var dataBindingComponent = FragmentDataBindingComponent(this)
+
     private val newGameDataViewModel: GameDataViewModel by lazy {
         ViewModelProviders.of(activity!!, viewModelFactory)
             .get(GameDataViewModel::class.java)
@@ -50,7 +52,7 @@ class FacebookProfileFragment: Fragment(), Injectable {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_android_profile, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_android_profile, container, false,dataBindingComponent)
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
