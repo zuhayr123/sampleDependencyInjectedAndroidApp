@@ -45,7 +45,7 @@ class FacebookProfileFragment: Fragment(), Injectable {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_android_profile, container, false)
         return binding.root
     }

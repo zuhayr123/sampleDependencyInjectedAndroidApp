@@ -22,6 +22,14 @@ class GameDataViewModel@Inject constructor(
 
     companion object{
         val email = "email"
+        val hometown = "user_hometown"
+        val user_link = "user_link"
+        val user_age_range = "user_age_range"
+        val user_birthday = "user_birthday"
+        val user_gender = "user_gender"
+        val user_location = "user_location"
+        val pages_show_list = "pages_show_list "
+        val user_likes = "user_likes"
         var userId : String = ""
         var accessToken: String = ""
         var isInternet = true

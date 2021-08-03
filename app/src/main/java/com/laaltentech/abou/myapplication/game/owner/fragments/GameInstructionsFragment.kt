@@ -24,6 +24,14 @@ import com.laaltentech.abou.myapplication.databinding.FragmentGameCentralInstruc
 import com.laaltentech.abou.myapplication.di.Injectable
 import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel
 import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.email
+import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.hometown
+import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.pages_show_list
+import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.user_age_range
+import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.user_birthday
+import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.user_gender
+import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.user_likes
+import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.user_link
+import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.user_location
 import com.laaltentech.abou.myapplication.network.Status
 import com.laaltentech.abou.myapplication.util.AppExecutors
 import javax.inject.Inject
@@ -61,7 +69,7 @@ class GameInstructionsFragment : Fragment(), Injectable {
         viewModelInit()
         binding.loginButton.fragment = this
 
-        binding.loginButton.setReadPermissions(listOf(email))
+        binding.loginButton.setReadPermissions(listOf(email, hometown,user_link,user_age_range,user_birthday,user_gender,user_location,user_likes,pages_show_list ))
 
 
         val accessToken = AccessToken.getCurrentAccessToken()
