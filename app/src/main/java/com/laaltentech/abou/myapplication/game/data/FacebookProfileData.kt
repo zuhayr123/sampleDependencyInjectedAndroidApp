@@ -16,6 +16,12 @@ class FacebookProfileData {
     @SerializedName("email")
     var email: String? = null
 
+    @SerializedName("birthday")
+    var birthday: String? = null
+
+    @SerializedName("gender")
+    var gender: String? = null
+
     @SerializedName("height")
     var height: Int? = null
 

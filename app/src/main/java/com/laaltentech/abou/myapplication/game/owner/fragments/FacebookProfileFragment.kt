@@ -21,8 +21,10 @@ import com.laaltentech.abou.myapplication.di.Injectable
 import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel
 import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.accessToken
 import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.userId
+import com.laaltentech.abou.myapplication.game.owner.adapters.AdapterFacebookPageList
 import com.laaltentech.abou.myapplication.network.Status
 import com.laaltentech.abou.myapplication.util.AppExecutors
+import com.laaltentech.abou.myapplication.util.FragmentDataBindingComponent
 import javax.inject.Inject
 
 
@@ -41,23 +43,28 @@ class FacebookProfileFragment: Fragment(), Injectable {
             .get(GameDataViewModel::class.java)
     }
 
+    lateinit var adapter : AdapterFacebookPageList
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_android_profile, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+
         viewModelInit()
+
+        newGameDataViewModel.apiCall.value = "available"
+
         accessToken = savedInstanceState?.getString("token")?:FacebookProfileFragmentArgs.fromBundle(requireArguments()).token
         userId = savedInstanceState?.getString("userId")?:FacebookProfileFragmentArgs.fromBundle(requireArguments()).userId
 
         Log.e("AccessToken", "The token is $accessToken and the userId is : $userId")
-
-        newGameDataViewModel.apiCall.value = "available"
 
         binding.profileViewModel = newGameDataViewModel
 
@@ -73,6 +80,23 @@ class FacebookProfileFragment: Fragment(), Injectable {
             }
         }
 
+        binding.apiHit.setOnClickListener {
+            newGameDataViewModel.newApiCall.value = "available"
+        }
+
+        adapter = AdapterFacebookPageList(
+            dataBindingComponent = DataBindingUtil.getDefaultComponent(),
+            appExecutors = appExecutors) {item, tapAction ->
+
+            when(tapAction){
+                "tapOnRootView" -> {
+                    Log.e("TAP", "TAP ON THE ROOT VIEW WAS DETECTED")
+                }
+            }
+        }
+
+        binding.adapterList.adapter = adapter
+
         super.onActivityCreated(savedInstanceState)
     }
 
@@ -85,6 +109,33 @@ class FacebookProfileFragment: Fragment(), Injectable {
                         newGameDataViewModel.data = item.data
                         Glide.with(binding.root).load(newGameDataViewModel.data?.url).into(binding.profileImageView)
                         newGameDataViewModel.notifyChange()
+                        Log.e("TAG", "Data fetch was successful ${Gson().toJson(item.data)}")
+                    }
+
+                    Status.LOADING -> {
+                        binding.progress.visibility = View.VISIBLE
+                        Log.e("TAG", "Data fetch Loading ${Gson().toJson(item.data)}")
+                    }
+
+                    Status.ERROR -> {
+                        binding.progress.visibility = View.GONE
+                        Log.e("TAG", "Data fetch error")
+                    }
+                }
+            })
+
+            it.newApiResults.observe(viewLifecycleOwner, Observer { item ->
+                when(item.status){
+                    Status.SUCCESS -> {
+                        binding.progress.visibility = View.GONE
+                        adapter.submitList(item.data)
+
+//                        if(item.data?.size == 0){
+//                            Log.e("SIZE OF ADAPTER", "THE SIZE OF ADAPTER WAS 0")
+//                        }
+
+                        newGameDataViewModel.notifyChange()
+                        adapter.notifyDataSetChanged()
                         Log.e("TAG", "Data fetch was successful ${Gson().toJson(item.data)}")
                     }
 

@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.laaltentech.abou.myapplication.game.data.FacebookPageListData
 import com.laaltentech.abou.myapplication.game.data.FacebookProfileData
 import com.laaltentech.abou.myapplication.game.data.GameData
 import com.laaltentech.abou.myapplication.game.data.GameDataWithIndividualRelation
@@ -28,7 +29,7 @@ class GameDataViewModel@Inject constructor(
         val user_birthday = "user_birthday"
         val user_gender = "user_gender"
         val user_location = "user_location"
-        val pages_show_list = "pages_show_list "
+        val pages_show_list = "pages_show_list"
         val user_likes = "user_likes"
         var userId : String = ""
         var accessToken: String = ""
@@ -38,6 +39,8 @@ class GameDataViewModel@Inject constructor(
     var data : FacebookProfileData? = FacebookProfileData()
 
     val apiCall = MutableLiveData<String>()
+    val newApiCall = MutableLiveData<String>()
+    var newApiResults: LiveData<Resource<List<FacebookPageListData>>>
     var results: LiveData<Resource<FacebookProfileData>>
 
 
@@ -61,6 +64,18 @@ class GameDataViewModel@Inject constructor(
                 "available" -> {
                     repository.fetchProfileData(userID = userId, accessToken = accessToken, isInternet = isInternet)
                 }
+                else -> {
+                    AbsentLiveData.create()
+                }
+            }
+        }
+
+        newApiResults = Transformations.switchMap(newApiCall){
+            when(apiCall.value){
+                "available" ->{
+                    repository.fetchPageList(userID = userId, accessToken = accessToken, isInternet = isInternet)
+                }
+
                 else -> {
                     AbsentLiveData.create()
                 }

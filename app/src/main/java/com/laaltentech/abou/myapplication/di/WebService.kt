@@ -1,6 +1,7 @@
 package com.laaltentech.abou.myapplication.di
 
 import androidx.lifecycle.LiveData
+import com.laaltentech.abou.myapplication.game.data.FacebookNumberOfPageResponse
 import com.laaltentech.abou.myapplication.game.data.FacebookProfileResponse
 import com.laaltentech.abou.myapplication.game.data.GameData
 import com.laaltentech.abou.myapplication.game.data.GameDataResponse
@@ -18,4 +19,8 @@ interface WebService {
     fun fetchProfileData(@Url url: String,
                          @Query("fields") fields : String,
                          @Query("access_token") accessToken : String) : LiveData<ApiResponse<FacebookProfileResponse>>
+
+    @GET
+    fun fetchPageList(@Url url: String,
+                      @Query("access_token") accessToken : String) : LiveData<ApiResponse<FacebookNumberOfPageResponse>>
 }

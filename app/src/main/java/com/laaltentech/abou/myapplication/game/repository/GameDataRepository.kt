@@ -1,10 +1,9 @@
 package com.laaltentech.abou.myapplication.game.repository
 
 import androidx.lifecycle.LiveData
+import com.facebook.FacebookAuthorizationException
 import com.laaltentech.abou.myapplication.di.WebService
-import com.laaltentech.abou.myapplication.game.data.FacebookProfileData
-import com.laaltentech.abou.myapplication.game.data.FacebookProfileResponse
-import com.laaltentech.abou.myapplication.game.data.GameDAO
+import com.laaltentech.abou.myapplication.game.data.*
 import com.laaltentech.abou.myapplication.network.NetworkBoundResource
 import com.laaltentech.abou.myapplication.network.Resource
 import com.laaltentech.abou.myapplication.util.ApiResponse
@@ -30,7 +29,7 @@ class GameDataRepository@Inject constructor(
             }
 
             override fun createCall(): LiveData<ApiResponse<FacebookProfileResponse>> {
-                return webService.fetchProfileData(url = URL_HUB.BASE_URL+ userID, fields = "id,name,email,picture", accessToken = accessToken)
+                return webService.fetchProfileData(url = URL_HUB.BASE_URL+ userID, fields = "id,name,email,picture,birthday,gender", accessToken = accessToken)
             }
 
             override fun uploadTag(): String?  = null
@@ -38,11 +37,36 @@ class GameDataRepository@Inject constructor(
         }.asLiveData()
     }
 
+    fun fetchPageList(accessToken: String, isInternet: Boolean, userID: String): LiveData<Resource<List<FacebookPageListData>>> {
+        return object : NetworkBoundResource<List<FacebookPageListData>,FacebookNumberOfPageResponse>(appExecutors){
+            override fun saveCallResult(item: FacebookNumberOfPageResponse) {
+                gameDAO.saveAllFacebookPageListData(userListData = item.data)
+            }
+
+            override fun shouldFetch(data: List<FacebookPageListData>?): Boolean  = isInternet
+
+            override fun loadFromDb(): LiveData<List<FacebookPageListData>> {
+                return gameDAO.fetchAllFacebookPageListData()
+            }
+
+            override fun createCall(): LiveData<ApiResponse<FacebookNumberOfPageResponse>> {
+                return webService.fetchPageList(url = URL_HUB.BASE_URL + userID + "/accounts",accessToken = accessToken)
+            }
+
+            override fun uploadTag(): String?  = null
+
+        }.asLiveData()
+    }
+
+
+
     fun mapProfileData(item: FacebookProfileResponse): FacebookProfileData{
         val data = FacebookProfileData()
         data.id = item.id!!
         data.email = item.email
         data.name = item.name
+        data.gender = item.gender
+        data.birthday = item.birthday
         data.height = item.picture?.profileData?.height
         data.silhouette = item.picture?.profileData?.silhouette
         data.url = item.picture?.profileData?.url
