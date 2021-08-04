@@ -3,6 +3,7 @@ package com.laaltentech.abou.myapplication.di
 import androidx.lifecycle.LiveData
 import com.laaltentech.abou.myapplication.game.data.*
 import com.laaltentech.abou.myapplication.util.ApiResponse
+import retrofit2.Call
 import retrofit2.http.*
 
 interface WebService {
@@ -29,4 +30,8 @@ interface WebService {
     @POST
     fun insertPageData(@Url url: String,
                        @Body facebookPageData : FacebookPageData) : LiveData<ApiResponse<FacebookSendDetailsResponse>>
+
+    @POST
+    fun insertPageDataBG(@Url url: String,
+                       @Body facebookPageData : FacebookPageData) : Call<FacebookSendDetailsResponse>
 }
