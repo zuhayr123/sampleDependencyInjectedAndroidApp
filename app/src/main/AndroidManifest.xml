@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
 
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <application
         android:name=".util.AppController"
         android:allowBackup="true"
@@ -27,6 +29,10 @@
 
         <meta-data android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id"/>
+
+        <service android:name=".game.repository.SendDataJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:exported="true"/>
 
     </application>
 

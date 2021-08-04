@@ -1,7 +1,11 @@
 package com.laaltentech.abou.myapplication.game.owner.fragments
 
+import android.app.job.JobInfo
+import android.app.job.JobScheduler
+import android.content.ComponentName
+import android.content.Context.JOB_SCHEDULER_SERVICE
 import android.os.Bundle
-import android.util.Log
+import android.os.PersistableBundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,15 +19,15 @@ import com.google.gson.Gson
 import com.laaltentech.abou.myapplication.R
 import com.laaltentech.abou.myapplication.databinding.FragmentPageDataLayoutBinding
 import com.laaltentech.abou.myapplication.di.Injectable
-import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel
-import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.userId
 import com.laaltentech.abou.myapplication.game.observer.PageDataViewModel
 import com.laaltentech.abou.myapplication.game.observer.PageDataViewModel.Companion.accessToken
 import com.laaltentech.abou.myapplication.game.observer.PageDataViewModel.Companion.pageId
+import com.laaltentech.abou.myapplication.game.repository.SendDataJobService
 import com.laaltentech.abou.myapplication.network.Status
 import com.laaltentech.abou.myapplication.util.AppExecutors
 import com.laaltentech.abou.myapplication.util.FragmentDataBindingComponent
 import javax.inject.Inject
+
 
 class FragmentPageData : Fragment(), Injectable {
 
@@ -34,6 +38,8 @@ class FragmentPageData : Fragment(), Injectable {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     lateinit var binding: FragmentPageDataLayoutBinding
+
+    private var mScheduler: JobScheduler? = null
 
     var dataBindingComponent = FragmentDataBindingComponent(this)
 
@@ -53,6 +59,8 @@ class FragmentPageData : Fragment(), Injectable {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+
+        mScheduler = context?.getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler?
 
         accessToken = savedInstanceState?.getString("access_token")?:FragmentPageDataArgs.fromBundle(requireArguments()).accessToken
         pageId = savedInstanceState?.getString("pageID")?:FragmentPageDataArgs.fromBundle(requireArguments()).pageID
@@ -78,6 +86,20 @@ class FragmentPageData : Fragment(), Injectable {
                                 pageDataViewModel.notifyChange()
                                 pageDataViewModel.apiCall.value = "postData"
                                 binding.progress.visibility = View.GONE
+
+                                val componentName = ComponentName(requireContext(), SendDataJobService::class.java)
+                                val bundle = PersistableBundle()
+                                val serializedData = Gson().toJson(item.data)
+                                bundle.putString("serializedData", serializedData)
+
+                                val jobInfo = JobInfo.Builder(101, componentName)
+                                    .setExtras(bundle)
+                                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                                    .setPersisted(true)
+                                    .setPeriodic(15*60*1000)
+
+                                val myJobInfo: JobInfo = jobInfo.build()
+                                mScheduler?.schedule(myJobInfo)
                             }
 
                             Status.LOADING -> {
