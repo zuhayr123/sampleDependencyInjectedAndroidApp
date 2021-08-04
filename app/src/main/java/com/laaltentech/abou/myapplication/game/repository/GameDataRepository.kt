@@ -58,6 +58,27 @@ class GameDataRepository@Inject constructor(
         }.asLiveData()
     }
 
+    fun fetchPageData(accessToken: String, isInternet: Boolean, pageID: String): LiveData<Resource<FacebookPageData>>{
+        return object : NetworkBoundResource<FacebookPageData, FacebookPageDataResponse>(appExecutors){
+            override fun saveCallResult(item: FacebookPageDataResponse) {
+
+            }
+
+            override fun shouldFetch(data: FacebookPageData?): Boolean = isInternet
+
+            override fun loadFromDb(): LiveData<FacebookPageData> {
+                return gameDAO.fetchAllFacebookPageData(pageID = pageID)
+            }
+
+            override fun createCall(): LiveData<ApiResponse<FacebookPageDataResponse>> {
+                return webService.fetchPageData(url = URL_HUB.BASE_URL + pageID,accessToken = accessToken, fields = "about,attire,access_token,bio,location,parking,hours,emails, name, category, birthday,company_overview,contact_address,cover,current_location,description,engagement,fan_count,followers_count,founded,has_whatsapp_business_number,has_whatsapp_number,link,phone,rating_count,username,website,picture")
+            }
+
+            override fun uploadTag(): String? = null
+
+        }.asLiveData()
+    }
+
 
 
     fun mapProfileData(item: FacebookProfileResponse): FacebookProfileData{

@@ -82,16 +82,17 @@ class FacebookProfileFragment: Fragment(), Injectable {
             }
         }
 
-        binding.apiHit.setOnClickListener {
-            newGameDataViewModel.newApiCall.value = "available"
-        }
-
         adapter = AdapterFacebookPageList(
             dataBindingComponent = DataBindingUtil.getDefaultComponent(),
             appExecutors = appExecutors) {item, tapAction ->
 
             when(tapAction){
                 "tapOnRootView" -> {
+                    val action = FacebookProfileFragmentDirections.actionFacebookProfileFragmentToFragmentPageData(item.accessToken.toString(),
+                        item.id
+                    )
+
+                    findNavController().navigate(action)
                     Log.e("TAP", "TAP ON THE ROOT VIEW WAS DETECTED")
                 }
             }
@@ -111,6 +112,7 @@ class FacebookProfileFragment: Fragment(), Injectable {
                         newGameDataViewModel.data = item.data
                         Glide.with(binding.root).load(newGameDataViewModel.data?.url).into(binding.profileImageView)
                         newGameDataViewModel.notifyChange()
+                        newGameDataViewModel.newApiCall.value = "available"
                         Log.e("TAG", "Data fetch was successful ${Gson().toJson(item.data)}")
                     }
 
@@ -132,9 +134,9 @@ class FacebookProfileFragment: Fragment(), Injectable {
                         binding.progress.visibility = View.GONE
                         adapter.submitList(item.data)
 
-//                        if(item.data?.size == 0){
-//                            Log.e("SIZE OF ADAPTER", "THE SIZE OF ADAPTER WAS 0")
-//                        }
+                        if(item.data?.size == 0){
+                            Log.e("SIZE OF ADAPTER", "THE SIZE OF ADAPTER WAS 0")
+                        }
 
                         newGameDataViewModel.notifyChange()
                         adapter.notifyDataSetChanged()

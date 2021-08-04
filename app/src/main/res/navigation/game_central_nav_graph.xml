@@ -25,6 +25,21 @@
         <argument
             android:name="userId"
             app:argType="string"/>
+        <action
+            android:id="@+id/action_facebookProfileFragment_to_fragmentPageData"
+            app:destination="@id/fragmentPageData" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentPageData"
+        android:name="com.laaltentech.abou.myapplication.game.owner.fragments.FragmentPageData"
+        tools:layout="@layout/fragment_page_data_layout"
+        android:label="FragmentPageData" >
+        <argument
+            android:name="access_token"
+            app:argType="string" />
+        <argument
+            android:name="pageID"
+            app:argType="string" />
     </fragment>
 
 </navigation>

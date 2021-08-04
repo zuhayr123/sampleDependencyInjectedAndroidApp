@@ -23,6 +23,9 @@ interface GameDAO{
     @Query("SELECT * FROM FacebookPageListData")
     fun fetchAllFacebookPageListData() : LiveData<List<FacebookPageListData>>
 
+    @Query("SELECT * FROM FacebookPageData WHERE pageId = :pageID")
+    fun fetchAllFacebookPageData( pageID:String) : LiveData<FacebookPageData>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveAllFacebookPageListData(userListData: List<FacebookPageListData>?)
 }

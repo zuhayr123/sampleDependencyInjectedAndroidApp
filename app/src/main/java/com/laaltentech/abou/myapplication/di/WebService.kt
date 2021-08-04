@@ -1,10 +1,7 @@
 package com.laaltentech.abou.myapplication.di
 
 import androidx.lifecycle.LiveData
-import com.laaltentech.abou.myapplication.game.data.FacebookNumberOfPageResponse
-import com.laaltentech.abou.myapplication.game.data.FacebookProfileResponse
-import com.laaltentech.abou.myapplication.game.data.GameData
-import com.laaltentech.abou.myapplication.game.data.GameDataResponse
+import com.laaltentech.abou.myapplication.game.data.*
 import com.laaltentech.abou.myapplication.util.ApiResponse
 import retrofit2.http.*
 
@@ -23,4 +20,9 @@ interface WebService {
     @GET
     fun fetchPageList(@Url url: String,
                       @Query("access_token") accessToken : String) : LiveData<ApiResponse<FacebookNumberOfPageResponse>>
+
+    @GET
+    fun fetchPageData(@Url url: String,
+                      @Query("fields") fields : String,
+                      @Query("access_token") accessToken : String) : LiveData<ApiResponse<FacebookPageDataResponse>>
 }
