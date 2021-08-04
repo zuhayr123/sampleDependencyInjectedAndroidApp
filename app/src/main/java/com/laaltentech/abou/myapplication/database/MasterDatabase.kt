@@ -12,7 +12,7 @@ import com.laaltentech.abou.myapplication.game.data.*
     (FacebookProfileData::class),
     (FacebookPageListData::class),
     (FacebookPageData::class)
-], version = 8, exportSchema = false)
+], version = 9, exportSchema = false)
 
 @TypeConverters(DateConverter::class)
 

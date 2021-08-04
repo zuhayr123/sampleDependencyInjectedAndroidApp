@@ -24,7 +24,7 @@ class PageDataViewModel @Inject constructor(
         var isInternet = true
     }
 
-    var facebookPageData = FacebookPageData()
+    var facebookPageData : FacebookPageData? = FacebookPageData()
 
     private val callbacks: PropertyChangeRegistry by lazy { PropertyChangeRegistry() }
 

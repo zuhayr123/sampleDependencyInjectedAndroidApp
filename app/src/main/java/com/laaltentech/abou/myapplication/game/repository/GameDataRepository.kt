@@ -147,6 +147,7 @@ class GameDataRepository@Inject constructor(
         data.username = item.username
         data.website = item.website
         data.picture = item.picture?.profileData?.url
+        data.founded = item.founded
 
 
         return data

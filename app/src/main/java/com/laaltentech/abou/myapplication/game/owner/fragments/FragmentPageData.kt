@@ -58,6 +58,7 @@ class FragmentPageData : Fragment(), Injectable {
         pageId = savedInstanceState?.getString("pageID")?:FragmentPageDataArgs.fromBundle(requireArguments()).pageID
 
         viewModelInit()
+        binding.pageDataViewModel = pageDataViewModel
 
         pageDataViewModel.apiCall.value = "available"
         super.onActivityCreated(savedInstanceState)
@@ -68,6 +69,10 @@ class FragmentPageData : Fragment(), Injectable {
             it.results.observe(viewLifecycleOwner, Observer { item ->
                 when (item.status) {
                     Status.SUCCESS -> {
+                        pageDataViewModel.facebookPageData = item.data
+                        Glide.with(binding.root).load(pageDataViewModel.facebookPageData?.cover).into(binding.cover)
+                        Glide.with(binding.root).load(pageDataViewModel.facebookPageData?.picture).into(binding.profileImageView)
+                        pageDataViewModel.notifyChange()
                         Log.e("TAG", "Data fetch was successful ${Gson().toJson(item.data)}")
                     }
 

@@ -79,5 +79,8 @@ class FacebookPageData {
     @SerializedName("picture")
     var picture: String? = null
 
+    @SerializedName("founded")
+    var founded: String? = null
+
 
 }
