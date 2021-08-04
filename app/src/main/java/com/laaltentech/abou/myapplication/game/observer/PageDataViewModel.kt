@@ -24,6 +24,8 @@ class PageDataViewModel @Inject constructor(
         var isInternet = true
     }
 
+    var facebookPageData = FacebookPageData()
+
     private val callbacks: PropertyChangeRegistry by lazy { PropertyChangeRegistry() }
 
     val apiCall = MutableLiveData<String>()

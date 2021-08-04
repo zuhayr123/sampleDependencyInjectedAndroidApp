@@ -27,5 +27,8 @@ interface GameDAO{
     fun fetchAllFacebookPageData( pageID:String) : LiveData<FacebookPageData>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertFacebookPageData(facebookPageData: FacebookPageData)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveAllFacebookPageListData(userListData: List<FacebookPageListData>?)
 }

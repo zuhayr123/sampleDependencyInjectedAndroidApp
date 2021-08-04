@@ -61,7 +61,7 @@ class GameDataRepository@Inject constructor(
     fun fetchPageData(accessToken: String, isInternet: Boolean, pageID: String): LiveData<Resource<FacebookPageData>>{
         return object : NetworkBoundResource<FacebookPageData, FacebookPageDataResponse>(appExecutors){
             override fun saveCallResult(item: FacebookPageDataResponse) {
-
+                gameDAO.insertFacebookPageData(mapFacebookPageData(item = item))
             }
 
             override fun shouldFetch(data: FacebookPageData?): Boolean = isInternet
@@ -92,6 +92,63 @@ class GameDataRepository@Inject constructor(
         data.silhouette = item.picture?.profileData?.silhouette
         data.url = item.picture?.profileData?.url
         data.width = item.picture?.profileData?.width
+        return data
+    }
+
+    fun mapFacebookPageData(item: FacebookPageDataResponse) : FacebookPageData{
+        val data = FacebookPageData()
+
+        data.about = item.about
+        data.accessToken = item.accessToken
+        data.birthday = item.birthday
+        data.category = item.category
+        data.company_overview = item.companyOverview
+        data.engagement = item.engagement?.count.toString()
+        data.pageId = item.id!!
+        data.name = item.name
+
+        item.contactAddress.let {
+            var address = ""
+
+            if(it?.street1 != null){
+                address += it.street1
+            }
+
+            if(it?.street2 != null){
+                address += ", " + it.street2
+            }
+
+            if(it?.city != null){
+                address += ", " + it.city
+            }
+
+            if(it?.postalCode != null){
+                address += ", " + it.postalCode
+            }
+
+            if(it?.country != null){
+                address += ", " + it.country
+            }
+
+            data.contact_address = address
+        }
+        data.cover = item.cover?.source
+        data.current_location = item.currentLocation
+        data.description = item.description
+        data.emails = item.emails.toString()
+        data.fan_count = item.fanCount.toString()
+        data.followers_count = item.followersCount.toString()
+        data.has_whatsapp_business_number = item.hasWhatsappBusinessNumber.toString()
+        data.has_whatsapp_number = item.hasWhatsappNumber.toString()
+        data.link = item.link
+        data.location = item.location?.street + ", " +item.location?.zip
+        data.phone = item.phone
+        data.rating_count = item.ratingCount.toString()
+        data.username = item.username
+        data.website = item.website
+        data.picture = item.picture?.profileData?.url
+
+
         return data
     }
 }

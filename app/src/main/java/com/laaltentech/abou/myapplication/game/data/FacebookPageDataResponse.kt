@@ -74,7 +74,7 @@ class FacebookPageDataResponse {
     var location: FacebookLocationResponse? = null
 
     @SerializedName("contact_address")
-    var currentAddress: FacebookAddressResponse? = null
+    var contactAddress: FacebookAddressResponse? = null
 
     @SerializedName("id")
     var id: String? = null
