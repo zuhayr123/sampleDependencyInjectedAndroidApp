@@ -67,21 +67,44 @@ class FragmentPageData : Fragment(), Injectable {
     fun viewModelInit() {
         pageDataViewModel.let {
             it.results.observe(viewLifecycleOwner, Observer { item ->
-                when (item.status) {
-                    Status.SUCCESS -> {
-                        pageDataViewModel.facebookPageData = item.data
-                        Glide.with(binding.root).load(pageDataViewModel.facebookPageData?.cover).into(binding.cover)
-                        Glide.with(binding.root).load(pageDataViewModel.facebookPageData?.picture).into(binding.profileImageView)
-                        pageDataViewModel.notifyChange()
-                        Log.e("TAG", "Data fetch was successful ${Gson().toJson(item.data)}")
+
+                when(pageDataViewModel.apiCall.value){
+                    "available" ->{
+                        when (item.status) {
+                            Status.SUCCESS -> {
+                                pageDataViewModel.facebookPageData = item.data
+                                Glide.with(binding.root).load(pageDataViewModel.facebookPageData?.cover).into(binding.cover)
+                                Glide.with(binding.root).load(pageDataViewModel.facebookPageData?.picture).into(binding.profileImageView)
+                                pageDataViewModel.notifyChange()
+                                pageDataViewModel.apiCall.value = "postData"
+                                binding.progress.visibility = View.GONE
+                            }
+
+                            Status.LOADING -> {
+                                binding.progress.visibility = View.VISIBLE
+                            }
+
+                            Status.ERROR -> {
+                                binding.progress.visibility = View.GONE
+                            }
+                        }
                     }
 
-                    Status.LOADING -> {
-                        Log.e("TAG", "Data fetch Loading ${Gson().toJson(item.data)}")
-                    }
+                    "postData" ->{
+                        when (item.status) {
+                            Status.SUCCESS -> {
+                                pageDataViewModel.notifyChange()
+                                binding.progress.visibility = View.GONE
+                            }
 
-                    Status.ERROR -> {
-                        Log.e("TAG", "Data fetch error")
+                            Status.LOADING -> {
+                                binding.progress.visibility = View.VISIBLE
+                            }
+
+                            Status.ERROR -> {
+                                binding.progress.visibility = View.GONE
+                            }
+                        }
                     }
                 }
             })

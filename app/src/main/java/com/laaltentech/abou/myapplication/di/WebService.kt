@@ -25,4 +25,8 @@ interface WebService {
     fun fetchPageData(@Url url: String,
                       @Query("fields") fields : String,
                       @Query("access_token") accessToken : String) : LiveData<ApiResponse<FacebookPageDataResponse>>
+
+    @POST
+    fun insertPageData(@Url url: String,
+                       @Body facebookPageData : FacebookPageData) : LiveData<ApiResponse<FacebookSendDetailsResponse>>
 }

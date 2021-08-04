@@ -51,6 +51,10 @@ class PageDataViewModel @Inject constructor(
                         isInternet = isInternet
                     )
                 }
+
+                "postData" -> {
+                    repository.postPageData(facebookPageData = facebookPageData!!, isInternet = isInternet, pageID = pageId)
+                }
                 else -> {
                     AbsentLiveData.create()
                 }
