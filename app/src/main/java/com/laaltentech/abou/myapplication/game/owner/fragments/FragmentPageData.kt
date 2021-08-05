@@ -155,13 +155,14 @@ class FragmentPageData : Fragment(), Injectable {
 
     fun executeWorkManagerFetch(data : FacebookPageData?, context: Context){
         val periodicWorkRequest =
-            PeriodicWorkRequest.Builder(SendDataWorkManager::class.java, 16, TimeUnit.MINUTES)
+            PeriodicWorkRequest.Builder(SendDataWorkManager::class.java, 16, TimeUnit.MINUTES, 2,TimeUnit.MINUTES)
                 .setInputData(Data.Builder().putString("serializedData", Gson().toJson(data)).build())
                 .setInitialDelay(10, TimeUnit.SECONDS)
                 .build()
 
         val workManager = WorkManager.getInstance(context)
 
+        Log.e("ENQUE", "Enque was called")
         workManager.enqueue(periodicWorkRequest)
     }
 }

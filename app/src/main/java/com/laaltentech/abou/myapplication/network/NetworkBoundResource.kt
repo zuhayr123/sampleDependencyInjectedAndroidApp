@@ -66,7 +66,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> @MainThread constru
             result.removeSource(dbSource)
 //            tagHolder.removeTag(uploadTag())
 
-            Log.e("test of return ","Response_of_result ${Gson().toJson(response)}")//todo remove gson
+//            Log.e("test of return ","Response_of_result ${Gson().toJson(response)}")//todo remove gson
 
             when (response) {
                 is ApiSuccessResponse -> {

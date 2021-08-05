@@ -31,18 +31,17 @@ class SendDataWorkManager(context : Context, params : WorkerParameters) : Worker
             FacebookPageData::class.java
         )
 
-        Log.e("DATA REACHED", "DATA REACHED THE WORK MANAGER ${Gson().toJson(facebookPageData)}")
+//        Log.e("DATA REACHED", "DATA REACHED THE WORK MANAGER ${Gson().toJson(facebookPageData)}")
 
 
         val webService = ServiceBuilder.buildService(WebService::class.java)
-        val myResponse: Call<FacebookSendDetailsResponse> = webService.insertPageDataBG(facebookPageData = facebookPageData!!, url = URL_HUB.POST_DATA_URL)
+        val myResponse: Call<FacebookSendDetailsResponse> = webService.insertPageDataBG(facebookPageData = facebookPageData, url = URL_HUB.POST_DATA_URL)
 
         myResponse.enqueue(object : Callback<FacebookSendDetailsResponse> {
             override fun onResponse(
                 call: Call<FacebookSendDetailsResponse>,
                 response: Response<FacebookSendDetailsResponse>
             ) {
-
                 createNotificationChannel()
 
                 var builder = NotificationCompat.Builder(applicationContext, PRIMARY_CHANNEL_ID)
@@ -55,11 +54,9 @@ class SendDataWorkManager(context : Context, params : WorkerParameters) : Worker
                     .setAutoCancel(true)
 
                 mNotifyManager!!.notify(0, builder.build())
-                Log.e("Res", "HOLY MOTHER OF GOD ${Gson().toJson(response.body())}")
             }
 
             override fun onFailure(call: Call<FacebookSendDetailsResponse>, t: Throwable) {
-                Log.e("Res", "ATLEAST SOMETHING WORKED")
             }
 
         })

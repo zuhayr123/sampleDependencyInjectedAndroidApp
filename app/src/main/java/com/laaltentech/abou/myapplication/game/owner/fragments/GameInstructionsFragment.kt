@@ -94,7 +94,7 @@ class GameInstructionsFragment : Fragment(), Injectable {
         binding.loginButton.registerCallback(callbackManager, object : FacebookCallback<LoginResult>{
             override fun onSuccess(result: LoginResult?) {
 
-                Log.e("Json Data Test : ", "The data being sent from the ${Gson().toJson(result)}")
+//                Log.e("Json Data Test : ", "The data being sent from the ${Gson().toJson(result)}")
                 Toast.makeText(context, "Login successful", Toast.LENGTH_LONG).show()
 
                 val action = GameInstructionsFragmentDirections.actionViewDetailsToFacebookProfileFragment(result?.accessToken?.token.toString(), result?.accessToken?.userId.toString())
@@ -125,11 +125,11 @@ class GameInstructionsFragment : Fragment(), Injectable {
                     Status.SUCCESS -> {
                         newGameDataViewModel.data = item.data
                         newGameDataViewModel.notifyChange()
-                        Log.e("TAG", "Data fetch was successful ${Gson().toJson(item.data)}")
+//                        Log.e("TAG", "Data fetch was successful ${Gson().toJson(item.data)}")
                     }
 
                     Status.LOADING -> {
-                        Log.e("TAG", "Data fetch Loading ${Gson().toJson(item.data)}")
+//                        Log.e("TAG", "Data fetch Loading ${Gson().toJson(item.data)}")
                     }
 
                     Status.ERROR -> {

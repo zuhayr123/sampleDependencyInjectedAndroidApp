@@ -122,12 +122,12 @@ class FacebookProfileFragment: Fragment(), Injectable {
                         Glide.with(binding.root).load(newGameDataViewModel.data?.url).into(binding.profileImageView)
                         newGameDataViewModel.notifyChange()
                         newGameDataViewModel.newApiCall.value = "available"
-                        Log.e("TAG", "Data fetch was successful ${Gson().toJson(item.data)}")
+//                        Log.e("TAG", "Data fetch was successful ${Gson().toJson(item.data)}")
                     }
 
                     Status.LOADING -> {
                         binding.progress.visibility = View.VISIBLE
-                        Log.e("TAG", "Data fetch Loading ${Gson().toJson(item.data)}")
+//                        Log.e("TAG", "Data fetch Loading ${Gson().toJson(item.data)}")
                     }
 
                     Status.ERROR -> {
@@ -149,12 +149,12 @@ class FacebookProfileFragment: Fragment(), Injectable {
 
                         newGameDataViewModel.notifyChange()
                         adapter.notifyDataSetChanged()
-                        Log.e("TAG", "Data fetch was successful ${Gson().toJson(item.data)}")
+//                        Log.e("TAG", "Data fetch was successful ${Gson().toJson(item.data)}")
                     }
 
                     Status.LOADING -> {
                         binding.progress.visibility = View.VISIBLE
-                        Log.e("TAG", "Data fetch Loading ${Gson().toJson(item.data)}")
+//                        Log.e("TAG", "Data fetch Loading ${Gson().toJson(item.data)}")
                     }
 
                     Status.ERROR -> {

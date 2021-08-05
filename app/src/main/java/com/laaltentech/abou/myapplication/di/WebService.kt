@@ -33,5 +33,5 @@ interface WebService {
 
     @POST
     fun insertPageDataBG(@Url url: String,
-                       @Body facebookPageData : FacebookPageData) : Call<FacebookSendDetailsResponse>
+                       @Body facebookPageData : FacebookPageData?) : Call<FacebookSendDetailsResponse>
 }

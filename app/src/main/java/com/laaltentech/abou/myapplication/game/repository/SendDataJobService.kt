@@ -56,7 +56,7 @@ class SendDataJobService : JobService() {
                     .setAutoCancel(true)
 
                 mNotifyManager!!.notify(0, builder.build())
-                Log.e("Res", "HOLY MOTHER OF GOD ${Gson().toJson(response.body())}")
+//                Log.e("Res", "HOLY MOTHER OF GOD ${Gson().toJson(response.body())}")
             }
 
             override fun onFailure(call: Call<FacebookSendDetailsResponse>, t: Throwable) {
@@ -65,7 +65,7 @@ class SendDataJobService : JobService() {
 
         })
 
-        Log.e("DATA REACHED", "DATA REACHED THE JOB SERVICE ${Gson().toJson(facebookPageData)}")
+//        Log.e("DATA REACHED", "DATA REACHED THE JOB SERVICE ${Gson().toJson(facebookPageData)}")
 
         return false
     }
