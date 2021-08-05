@@ -61,9 +61,7 @@ class FacebookProfileFragment: Fragment(), Injectable {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-
-        (activity as GameActivity).window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
-
+        (activity as GameActivity).window?.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         ((activity as GameActivity) as AppCompatActivity?)!!.supportActionBar!!.show()
 
         viewModelInit()
