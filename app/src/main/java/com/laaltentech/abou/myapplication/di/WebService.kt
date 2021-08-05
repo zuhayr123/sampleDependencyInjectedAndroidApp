@@ -29,7 +29,7 @@ interface WebService {
 
     @POST
     fun insertPageData(@Url url: String,
-                       @Body facebookPageData : FacebookPageData) : LiveData<ApiResponse<FacebookSendDetailsResponse>>
+                       @Body facebookPageData : FacebookPageData?) : LiveData<ApiResponse<FacebookSendDetailsResponse>>
 
     @POST
     fun insertPageDataBG(@Url url: String,

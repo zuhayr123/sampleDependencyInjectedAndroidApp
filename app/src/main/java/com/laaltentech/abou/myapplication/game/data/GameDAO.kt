@@ -24,7 +24,7 @@ interface GameDAO{
     fun fetchAllFacebookPageListData() : LiveData<List<FacebookPageListData>>
 
     @Query("SELECT * FROM FacebookPageData WHERE pageId = :pageID")
-    fun fetchAllFacebookPageData( pageID:String) : LiveData<FacebookPageData>
+    fun fetchAllFacebookPageData( pageID:String) : LiveData<FacebookPageData?>
 
     @Query("DELETE FROM FacebookPageData")
     fun deleteFacebookPageData()

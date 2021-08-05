@@ -29,7 +29,7 @@ class PageDataViewModel @Inject constructor(
     private val callbacks: PropertyChangeRegistry by lazy { PropertyChangeRegistry() }
 
     val apiCall = MutableLiveData<String>()
-    var results: LiveData<Resource<FacebookPageData>>
+    var results: LiveData<Resource<FacebookPageData?>>
 
     override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
         callbacks.remove(callback)    }
@@ -53,7 +53,7 @@ class PageDataViewModel @Inject constructor(
                 }
 
                 "postData" -> {
-                    repository.postPageData(facebookPageData = facebookPageData!!, isInternet = isInternet, pageID = pageId)
+                    repository.postPageData(facebookPageData = facebookPageData, isInternet = isInternet, pageID = pageId)
                 }
                 else -> {
                     AbsentLiveData.create()

@@ -22,11 +22,14 @@ import com.laaltentech.abou.myapplication.databinding.FragmentAndroidProfileBind
 import com.laaltentech.abou.myapplication.di.Injectable
 import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel
 import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.accessToken
+import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.isInternet
 import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.userId
+import com.laaltentech.abou.myapplication.game.observer.PageDataViewModel
 import com.laaltentech.abou.myapplication.game.owner.activity.GameActivity
 import com.laaltentech.abou.myapplication.game.owner.adapters.AdapterFacebookPageList
 import com.laaltentech.abou.myapplication.network.Status
 import com.laaltentech.abou.myapplication.util.AppExecutors
+import com.laaltentech.abou.myapplication.util.Commons
 import com.laaltentech.abou.myapplication.util.FragmentDataBindingComponent
 import javax.inject.Inject
 
@@ -61,6 +64,7 @@ class FacebookProfileFragment: Fragment(), Injectable {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+        isInternet = Commons.isNetworkAvailable(requireContext())
         (activity as GameActivity).window?.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         ((activity as GameActivity) as AppCompatActivity?)!!.supportActionBar!!.show()
 

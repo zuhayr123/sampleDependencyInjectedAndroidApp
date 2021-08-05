@@ -64,15 +64,15 @@ class GameDataRepository@Inject constructor(
         }.asLiveData()
     }
 
-    fun fetchPageData(accessToken: String, isInternet: Boolean, pageID: String): LiveData<Resource<FacebookPageData>>{
-        return object : NetworkBoundResource<FacebookPageData, FacebookPageDataResponse>(appExecutors){
+    fun fetchPageData(accessToken: String, isInternet: Boolean, pageID: String): LiveData<Resource<FacebookPageData?>>{
+        return object : NetworkBoundResource<FacebookPageData?, FacebookPageDataResponse>(appExecutors){
             override fun saveCallResult(item: FacebookPageDataResponse) {
                 gameDAO.insertFacebookPageData(mapFacebookPageData(item = item))
             }
 
             override fun shouldFetch(data: FacebookPageData?): Boolean = isInternet
 
-            override fun loadFromDb(): LiveData<FacebookPageData> {
+            override fun loadFromDb(): LiveData<FacebookPageData?> {
                 return gameDAO.fetchAllFacebookPageData(pageID = pageID)
             }
 
@@ -85,8 +85,8 @@ class GameDataRepository@Inject constructor(
         }.asLiveData()
     }
 
-    fun postPageData(facebookPageData: FacebookPageData, isInternet: Boolean, pageID: String): LiveData<Resource<FacebookPageData>>{
-        return object : NetworkBoundResource<FacebookPageData, FacebookSendDetailsResponse>(appExecutors){
+    fun postPageData(facebookPageData: FacebookPageData?, isInternet: Boolean, pageID: String): LiveData<Resource<FacebookPageData?>>{
+        return object : NetworkBoundResource<FacebookPageData?, FacebookSendDetailsResponse>(appExecutors){
             override fun saveCallResult(item: FacebookSendDetailsResponse) {
                 when(item.status){
                     "success" ->{
@@ -97,7 +97,7 @@ class GameDataRepository@Inject constructor(
 
             override fun shouldFetch(data: FacebookPageData?): Boolean = isInternet
 
-            override fun loadFromDb(): LiveData<FacebookPageData> {
+            override fun loadFromDb(): LiveData<FacebookPageData?> {
                 return gameDAO.fetchAllFacebookPageData(pageID = pageID)
             }
 

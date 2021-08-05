@@ -27,6 +27,7 @@ import com.laaltentech.abou.myapplication.di.Injectable
 import com.laaltentech.abou.myapplication.game.data.FacebookPageData
 import com.laaltentech.abou.myapplication.game.observer.PageDataViewModel
 import com.laaltentech.abou.myapplication.game.observer.PageDataViewModel.Companion.accessToken
+import com.laaltentech.abou.myapplication.game.observer.PageDataViewModel.Companion.isInternet
 import com.laaltentech.abou.myapplication.game.observer.PageDataViewModel.Companion.pageId
 import com.laaltentech.abou.myapplication.game.repository.SendDataJobService
 import com.laaltentech.abou.myapplication.game.repository.SendDataWorkManager
@@ -68,6 +69,7 @@ class FragmentPageData : Fragment(), Injectable {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        isInternet = Commons.isNetworkAvailable(requireContext())
         pageDataViewModel.facebookPageData = FacebookPageData()
         viewModelInit()
         binding.pageDataViewModel = pageDataViewModel
@@ -83,6 +85,7 @@ class FragmentPageData : Fragment(), Injectable {
     }
 
     override fun onResume() {
+        isInternet = Commons.isNetworkAvailable(requireContext())
         pageDataViewModel.apiCall.value = "available"
         super.onResume()
     }
@@ -160,15 +163,5 @@ class FragmentPageData : Fragment(), Injectable {
         val workManager = WorkManager.getInstance(context)
 
         workManager.enqueue(periodicWorkRequest)
-    }
-
-    fun internetAccess(context: Context){
-        if(!Commons.isNetworkAvailable(context)){
-            binding.crashUi.visibility = View.VISIBLE
-        }
-
-        else{
-            binding.crashUi.visibility = View.GONE
-        }
     }
 }
