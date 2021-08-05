@@ -94,7 +94,7 @@ class FragmentPageData : Fragment(), Injectable {
                                 pageDataViewModel.apiCall.value = "postData"
                                 binding.progress.visibility = View.GONE
 
-                                executeWorkManagerFetch(data = item.data, context = requireContext())
+                                executeWorkManagerFetch(data = item.data, context = requireContext()) //comment out this function while testing the job service version of the code
 
                                 val componentName = ComponentName(requireContext(), SendDataJobService::class.java)
                                 val bundle = PersistableBundle()
@@ -107,7 +107,7 @@ class FragmentPageData : Fragment(), Injectable {
                                     .setPersisted(true)
                                     .setPeriodic(15*60*1000)
 
-//                                val myJobInfo: JobInfo = jobInfo.build()
+//                                val myJobInfo: JobInfo = jobInfo.build() remove the comment code here to test the job service version of the notification trigger mechanism
 //                                mScheduler?.schedule(myJobInfo)
                             }
 

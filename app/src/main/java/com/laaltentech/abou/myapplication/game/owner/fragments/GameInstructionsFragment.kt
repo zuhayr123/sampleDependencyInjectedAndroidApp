@@ -6,7 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -32,6 +34,7 @@ import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Compan
 import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.user_likes
 import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.user_link
 import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.user_location
+import com.laaltentech.abou.myapplication.game.owner.activity.GameActivity
 import com.laaltentech.abou.myapplication.network.Status
 import com.laaltentech.abou.myapplication.util.AppExecutors
 import javax.inject.Inject
@@ -66,6 +69,12 @@ class GameInstructionsFragment : Fragment(), Injectable {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+
+
+        (activity as GameActivity).window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
+        ((activity as GameActivity) as AppCompatActivity?)!!.supportActionBar!!.hide()
+
         viewModelInit()
         binding.loginButton.fragment = this
 

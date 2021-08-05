@@ -49,7 +49,7 @@ class SendDataJobService : JobService() {
                 var builder = NotificationCompat.Builder(applicationContext, PRIMARY_CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_notification_clear_all)
                     .setContentTitle("Notify Data Upload")
-                    .setContentText("Please wait while the data is being uploaded")
+                    .setContentText("Your data was successfully uploaded")
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setDefaults(NotificationCompat.DEFAULT_ALL)

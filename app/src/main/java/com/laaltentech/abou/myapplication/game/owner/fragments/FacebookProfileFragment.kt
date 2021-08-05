@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -21,6 +23,7 @@ import com.laaltentech.abou.myapplication.di.Injectable
 import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel
 import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.accessToken
 import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.userId
+import com.laaltentech.abou.myapplication.game.owner.activity.GameActivity
 import com.laaltentech.abou.myapplication.game.owner.adapters.AdapterFacebookPageList
 import com.laaltentech.abou.myapplication.network.Status
 import com.laaltentech.abou.myapplication.util.AppExecutors
@@ -58,6 +61,10 @@ class FacebookProfileFragment: Fragment(), Injectable {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+
+        (activity as GameActivity).window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
+
+        ((activity as GameActivity) as AppCompatActivity?)!!.supportActionBar!!.show()
 
         viewModelInit()
 

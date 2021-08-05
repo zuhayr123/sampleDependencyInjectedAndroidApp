@@ -3,13 +3,10 @@ import android.R
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.content.Context.NOTIFICATION_SERVICE
 import android.graphics.Color
 import android.os.Build
-import android.os.PersistableBundle
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.google.gson.Gson
@@ -51,7 +48,7 @@ class SendDataWorkManager(context : Context, params : WorkerParameters) : Worker
                 var builder = NotificationCompat.Builder(applicationContext, PRIMARY_CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_notification_clear_all)
                     .setContentTitle("Notify Data Upload")
-                    .setContentText("Please wait while the data is being uploaded")
+                    .setContentText("Your data was successfully uploaded")
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setDefaults(NotificationCompat.DEFAULT_ALL)
