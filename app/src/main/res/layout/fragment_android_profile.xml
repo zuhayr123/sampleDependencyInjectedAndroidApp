@@ -6,7 +6,7 @@
     <data>
         <variable
             name="profileViewModel"
-            type="com.laaltentech.abou.myapplication.game.observer.FacebookProfileViewModel" />
+            type="com.laaltentech.abou.myapplication.facebook.observer.FacebookProfileViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

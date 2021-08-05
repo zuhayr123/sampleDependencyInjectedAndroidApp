@@ -6,7 +6,7 @@
     <data>
         <variable
             name="facebookPage"
-            type="com.laaltentech.abou.myapplication.game.data.FacebookPageListData" />
+            type="com.laaltentech.abou.myapplication.facebook.data.FacebookPageListData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

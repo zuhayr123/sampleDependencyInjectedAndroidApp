@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/viewDetails"
-        android:name="com.laaltentech.abou.myapplication.game.owner.fragments.GameInstructionsFragment"
+        android:name="com.laaltentech.abou.myapplication.facebook.owner.fragments.FacebookLoginFragment"
         android:label="Details"
         tools:layout="@layout/fragment_game_central_instructions">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/facebookProfileFragment"
-        android:name="com.laaltentech.abou.myapplication.game.owner.fragments.FacebookProfileFragment"
+        android:name="com.laaltentech.abou.myapplication.facebook.owner.fragments.FacebookProfileFragment"
         android:label="FacebookProfileFragment"
         tools:layout="@layout/fragment_android_profile">
         <argument
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentPageData"
-        android:name="com.laaltentech.abou.myapplication.game.owner.fragments.FragmentPageData"
+        android:name="com.laaltentech.abou.myapplication.facebook.owner.fragments.FragmentPageData"
         tools:layout="@layout/fragment_page_data_layout"
         android:label="FragmentPageData" >
         <argument
