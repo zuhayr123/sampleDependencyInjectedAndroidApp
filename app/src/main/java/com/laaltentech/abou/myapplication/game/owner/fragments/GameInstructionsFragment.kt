@@ -20,20 +20,19 @@ import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
-import com.google.gson.Gson
 import com.laaltentech.abou.myapplication.R
 import com.laaltentech.abou.myapplication.databinding.FragmentGameCentralInstructionsBinding
 import com.laaltentech.abou.myapplication.di.Injectable
-import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel
-import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.email
-import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.hometown
-import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.pages_show_list
-import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.user_age_range
-import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.user_birthday
-import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.user_gender
-import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.user_likes
-import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.user_link
-import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.user_location
+import com.laaltentech.abou.myapplication.game.observer.FacebookProfileViewModel
+import com.laaltentech.abou.myapplication.game.observer.FacebookProfileViewModel.Companion.email
+import com.laaltentech.abou.myapplication.game.observer.FacebookProfileViewModel.Companion.hometown
+import com.laaltentech.abou.myapplication.game.observer.FacebookProfileViewModel.Companion.pages_show_list
+import com.laaltentech.abou.myapplication.game.observer.FacebookProfileViewModel.Companion.user_age_range
+import com.laaltentech.abou.myapplication.game.observer.FacebookProfileViewModel.Companion.user_birthday
+import com.laaltentech.abou.myapplication.game.observer.FacebookProfileViewModel.Companion.user_gender
+import com.laaltentech.abou.myapplication.game.observer.FacebookProfileViewModel.Companion.user_likes
+import com.laaltentech.abou.myapplication.game.observer.FacebookProfileViewModel.Companion.user_link
+import com.laaltentech.abou.myapplication.game.observer.FacebookProfileViewModel.Companion.user_location
 import com.laaltentech.abou.myapplication.game.owner.activity.GameActivity
 import com.laaltentech.abou.myapplication.network.Status
 import com.laaltentech.abou.myapplication.util.AppExecutors
@@ -52,9 +51,9 @@ class GameInstructionsFragment : Fragment(), Injectable {
 
     lateinit var callbackManager : CallbackManager
 
-    private val newGameDataViewModel: GameDataViewModel by lazy {
+    private val newFacebookProfileViewModel: FacebookProfileViewModel by lazy {
         ViewModelProviders.of(activity!!, viewModelFactory)
-            .get(GameDataViewModel::class.java)
+            .get(FacebookProfileViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -119,12 +118,12 @@ class GameInstructionsFragment : Fragment(), Injectable {
     }
 
     fun viewModelInit(){
-        newGameDataViewModel.let {
+        newFacebookProfileViewModel.let {
             it.results.observe(viewLifecycleOwner, Observer { item ->
                 when(item.status){
                     Status.SUCCESS -> {
-                        newGameDataViewModel.data = item.data
-                        newGameDataViewModel.notifyChange()
+                        newFacebookProfileViewModel.data = item.data
+                        newFacebookProfileViewModel.notifyChange()
 //                        Log.e("TAG", "Data fetch was successful ${Gson().toJson(item.data)}")
                     }
 

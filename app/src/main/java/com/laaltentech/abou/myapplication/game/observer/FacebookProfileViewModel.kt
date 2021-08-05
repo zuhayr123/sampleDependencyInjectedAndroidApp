@@ -8,16 +8,14 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.laaltentech.abou.myapplication.game.data.FacebookPageListData
 import com.laaltentech.abou.myapplication.game.data.FacebookProfileData
-import com.laaltentech.abou.myapplication.game.data.GameData
-import com.laaltentech.abou.myapplication.game.data.GameDataWithIndividualRelation
-import com.laaltentech.abou.myapplication.game.repository.GameDataRepository
+import com.laaltentech.abou.myapplication.game.repository.FacebookDataRepository
 import com.laaltentech.abou.myapplication.network.Resource
 import com.laaltentech.abou.myapplication.util.AbsentLiveData
 import com.laaltentech.abou.myapplication.util.AppExecutors
 import javax.inject.Inject
 
-class GameDataViewModel@Inject constructor(
-    private val repository: GameDataRepository,
+class FacebookProfileViewModel@Inject constructor(
+    private val repository: FacebookDataRepository,
     var executors: AppExecutors
 ) : ViewModel(), Observable {
 

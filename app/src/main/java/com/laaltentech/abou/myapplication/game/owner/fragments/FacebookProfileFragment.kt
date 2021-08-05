@@ -16,15 +16,13 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.facebook.AccessToken
 import com.facebook.AccessTokenTracker
-import com.google.gson.Gson
 import com.laaltentech.abou.myapplication.R
 import com.laaltentech.abou.myapplication.databinding.FragmentAndroidProfileBinding
 import com.laaltentech.abou.myapplication.di.Injectable
-import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel
-import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.accessToken
-import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.isInternet
-import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel.Companion.userId
-import com.laaltentech.abou.myapplication.game.observer.PageDataViewModel
+import com.laaltentech.abou.myapplication.game.observer.FacebookProfileViewModel
+import com.laaltentech.abou.myapplication.game.observer.FacebookProfileViewModel.Companion.accessToken
+import com.laaltentech.abou.myapplication.game.observer.FacebookProfileViewModel.Companion.isInternet
+import com.laaltentech.abou.myapplication.game.observer.FacebookProfileViewModel.Companion.userId
 import com.laaltentech.abou.myapplication.game.owner.activity.GameActivity
 import com.laaltentech.abou.myapplication.game.owner.adapters.AdapterFacebookPageList
 import com.laaltentech.abou.myapplication.network.Status
@@ -46,9 +44,9 @@ class FacebookProfileFragment: Fragment(), Injectable {
 
     var dataBindingComponent = FragmentDataBindingComponent(this)
 
-    private val newGameDataViewModel: GameDataViewModel by lazy {
+    private val newFacebookProfileViewModel: FacebookProfileViewModel by lazy {
         ViewModelProviders.of(activity!!, viewModelFactory)
-            .get(GameDataViewModel::class.java)
+            .get(FacebookProfileViewModel::class.java)
     }
 
     lateinit var adapter : AdapterFacebookPageList
@@ -70,14 +68,14 @@ class FacebookProfileFragment: Fragment(), Injectable {
 
         viewModelInit()
 
-        newGameDataViewModel.apiCall.value = "available"
+        newFacebookProfileViewModel.apiCall.value = "available"
 
         accessToken = savedInstanceState?.getString("token")?:FacebookProfileFragmentArgs.fromBundle(requireArguments()).token
         userId = savedInstanceState?.getString("userId")?:FacebookProfileFragmentArgs.fromBundle(requireArguments()).userId
 
         Log.e("AccessToken", "The token is $accessToken and the userId is : $userId")
 
-        binding.profileViewModel = newGameDataViewModel
+        binding.profileViewModel = newFacebookProfileViewModel
 
         val accessTokenTracker = object : AccessTokenTracker() {
             override fun onCurrentAccessTokenChanged(
@@ -113,15 +111,15 @@ class FacebookProfileFragment: Fragment(), Injectable {
     }
 
     fun viewModelInit(){
-        newGameDataViewModel.let {
+        newFacebookProfileViewModel.let {
             it.results.observe(viewLifecycleOwner, Observer { item ->
                 when(item.status){
                     Status.SUCCESS -> {
                         binding.progress.visibility = View.GONE
-                        newGameDataViewModel.data = item.data
-                        Glide.with(binding.root).load(newGameDataViewModel.data?.url).into(binding.profileImageView)
-                        newGameDataViewModel.notifyChange()
-                        newGameDataViewModel.newApiCall.value = "available"
+                        newFacebookProfileViewModel.data = item.data
+                        Glide.with(binding.root).load(newFacebookProfileViewModel.data?.url).into(binding.profileImageView)
+                        newFacebookProfileViewModel.notifyChange()
+                        newFacebookProfileViewModel.newApiCall.value = "available"
 //                        Log.e("TAG", "Data fetch was successful ${Gson().toJson(item.data)}")
                     }
 
@@ -147,7 +145,7 @@ class FacebookProfileFragment: Fragment(), Injectable {
                             Log.e("SIZE OF ADAPTER", "THE SIZE OF ADAPTER WAS 0")
                         }
 
-                        newGameDataViewModel.notifyChange()
+                        newFacebookProfileViewModel.notifyChange()
                         adapter.notifyDataSetChanged()
 //                        Log.e("TAG", "Data fetch was successful ${Gson().toJson(item.data)}")
                     }

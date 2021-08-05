@@ -1,9 +1,8 @@
 package com.laaltentech.abou.myapplication.di.module
 
-import androidx.paging.PagedList
 import com.laaltentech.abou.myapplication.di.WebService
 import com.laaltentech.abou.myapplication.game.data.GameDAO
-import com.laaltentech.abou.myapplication.game.repository.GameDataRepository
+import com.laaltentech.abou.myapplication.game.repository.FacebookDataRepository
 import com.laaltentech.abou.myapplication.util.AppExecutors
 import dagger.Module
 import dagger.Provides
@@ -16,8 +15,8 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideFlickrRepository(webservice: WebService, dao: GameDAO, executor: AppExecutors): GameDataRepository {
-        return GameDataRepository(webService = webservice, gameDAO = dao, appExecutors = executor)
+    fun provideFlickrRepository(webservice: WebService, dao: GameDAO, executor: AppExecutors): FacebookDataRepository {
+        return FacebookDataRepository(webService = webservice, gameDAO = dao, appExecutors = executor)
     }
 
 }

@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.laaltentech.abou.myapplication.di.ViewModelKey
 import com.laaltentech.abou.myapplication.factory.AppModelFactory
-import com.laaltentech.abou.myapplication.game.observer.GameDataViewModel
+import com.laaltentech.abou.myapplication.game.observer.FacebookProfileViewModel
 import com.laaltentech.abou.myapplication.game.observer.PageDataViewModel
 import dagger.Binds
 import dagger.Module
@@ -17,8 +17,8 @@ abstract class ViewModelModule {
     //todo add these details to the app model factory
     @Binds
     @IntoMap
-    @ViewModelKey(GameDataViewModel::class)
-    abstract fun bindGameDataViewModel(newGameDataViewModel: GameDataViewModel): ViewModel
+    @ViewModelKey(FacebookProfileViewModel::class)
+    abstract fun bindGameDataViewModel(newFacebookProfileViewModel: FacebookProfileViewModel): ViewModel
 
     @Binds
     @IntoMap

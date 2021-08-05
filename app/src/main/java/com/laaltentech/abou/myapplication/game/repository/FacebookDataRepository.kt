@@ -11,7 +11,7 @@ import com.laaltentech.abou.myapplication.util.AppExecutors
 import com.laaltentech.abou.myapplication.util.URL_HUB
 import javax.inject.Inject
 
-class GameDataRepository@Inject constructor(
+class FacebookDataRepository@Inject constructor(
     private val webService: WebService,
     private val appExecutors: AppExecutors,
     private val gameDAO: GameDAO){
