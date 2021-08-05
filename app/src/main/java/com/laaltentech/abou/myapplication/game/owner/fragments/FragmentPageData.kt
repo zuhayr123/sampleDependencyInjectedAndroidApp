@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Context.JOB_SCHEDULER_SERVICE
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,7 +32,7 @@ import com.laaltentech.abou.myapplication.game.repository.SendDataJobService
 import com.laaltentech.abou.myapplication.game.repository.SendDataWorkManager
 import com.laaltentech.abou.myapplication.network.Status
 import com.laaltentech.abou.myapplication.util.AppExecutors
-import com.laaltentech.abou.myapplication.util.FragmentDataBindingComponent
+import com.laaltentech.abou.myapplication.util.Commons
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -48,7 +49,7 @@ class FragmentPageData : Fragment(), Injectable {
 
     private var mScheduler: JobScheduler? = null
 
-    var dataBindingComponent = FragmentDataBindingComponent(this)
+//    var dataBindingComponent = FragmentDataBindingComponent(this)
 
     private val pageDataViewModel: PageDataViewModel by lazy {
         ViewModelProviders.of(activity!!, viewModelFactory)
@@ -60,23 +61,30 @@ class FragmentPageData : Fragment(), Injectable {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_page_data_layout, container, false,dataBindingComponent)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_page_data_layout, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        pageDataViewModel.facebookPageData = FacebookPageData()
+        viewModelInit()
+        binding.pageDataViewModel = pageDataViewModel
 
         mScheduler = context?.getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler?
 
         accessToken = savedInstanceState?.getString("access_token")?:FragmentPageDataArgs.fromBundle(requireArguments()).accessToken
         pageId = savedInstanceState?.getString("pageID")?:FragmentPageDataArgs.fromBundle(requireArguments()).pageID
-
-        viewModelInit()
-        binding.pageDataViewModel = pageDataViewModel
-
+        Log.e("PAGE_ID", "PAGE ID IS $pageId")
         pageDataViewModel.apiCall.value = "available"
-        super.onActivityCreated(savedInstanceState)
+        pageDataViewModel.notifyChange()
+
+    }
+
+    override fun onResume() {
+        pageDataViewModel.apiCall.value = "available"
+        super.onResume()
     }
 
     fun viewModelInit() {
@@ -152,5 +160,15 @@ class FragmentPageData : Fragment(), Injectable {
         val workManager = WorkManager.getInstance(context)
 
         workManager.enqueue(periodicWorkRequest)
+    }
+
+    fun internetAccess(context: Context){
+        if(!Commons.isNetworkAvailable(context)){
+            binding.crashUi.visibility = View.VISIBLE
+        }
+
+        else{
+            binding.crashUi.visibility = View.GONE
+        }
     }
 }

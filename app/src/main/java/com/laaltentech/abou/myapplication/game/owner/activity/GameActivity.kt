@@ -12,8 +12,10 @@ import com.facebook.FacebookSdk
 import com.facebook.appevents.AppEventsLogger
 import com.laaltentech.abou.myapplication.R
 import com.laaltentech.abou.myapplication.databinding.ActivityGameCentralBinding
+import com.laaltentech.abou.myapplication.util.OnBackPressed
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
+import kotlinx.android.synthetic.main.activity_game_central.*
 import javax.inject.Inject
 
 

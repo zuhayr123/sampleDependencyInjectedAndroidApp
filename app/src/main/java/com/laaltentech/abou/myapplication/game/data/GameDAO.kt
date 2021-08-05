@@ -26,6 +26,9 @@ interface GameDAO{
     @Query("SELECT * FROM FacebookPageData WHERE pageId = :pageID")
     fun fetchAllFacebookPageData( pageID:String) : LiveData<FacebookPageData>
 
+    @Query("DELETE FROM FacebookPageData")
+    fun deleteFacebookPageData()
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFacebookPageData(facebookPageData: FacebookPageData)
 

@@ -16,6 +16,12 @@ class GameDataRepository@Inject constructor(
     private val appExecutors: AppExecutors,
     private val gameDAO: GameDAO){
 
+    fun deleteFacebookPageData() {
+        appExecutors.diskIO().execute {
+            gameDAO.deleteFacebookPageData()
+        }
+    }
+
     fun fetchProfileData(accessToken: String, isInternet: Boolean, userID: String): LiveData<Resource<FacebookProfileData>>{
         return object : NetworkBoundResource<FacebookProfileData, FacebookProfileResponse>(appExecutors){
             override fun saveCallResult(item: FacebookProfileResponse) {
