@@ -3,6 +3,7 @@ package com.laaltentech.abou.myapplication.game.owner.fragments
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
 import android.content.ComponentName
+import android.content.Context
 import android.content.Context.JOB_SCHEDULER_SERVICE
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -14,18 +15,24 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.work.Data
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkManager
 import com.bumptech.glide.Glide
 import com.google.gson.Gson
 import com.laaltentech.abou.myapplication.R
 import com.laaltentech.abou.myapplication.databinding.FragmentPageDataLayoutBinding
 import com.laaltentech.abou.myapplication.di.Injectable
+import com.laaltentech.abou.myapplication.game.data.FacebookPageData
 import com.laaltentech.abou.myapplication.game.observer.PageDataViewModel
 import com.laaltentech.abou.myapplication.game.observer.PageDataViewModel.Companion.accessToken
 import com.laaltentech.abou.myapplication.game.observer.PageDataViewModel.Companion.pageId
 import com.laaltentech.abou.myapplication.game.repository.SendDataJobService
+import com.laaltentech.abou.myapplication.game.repository.SendDataWorkManager
 import com.laaltentech.abou.myapplication.network.Status
 import com.laaltentech.abou.myapplication.util.AppExecutors
 import com.laaltentech.abou.myapplication.util.FragmentDataBindingComponent
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -87,6 +94,8 @@ class FragmentPageData : Fragment(), Injectable {
                                 pageDataViewModel.apiCall.value = "postData"
                                 binding.progress.visibility = View.GONE
 
+                                executeWorkManagerFetch(data = item.data, context = requireContext())
+
                                 val componentName = ComponentName(requireContext(), SendDataJobService::class.java)
                                 val bundle = PersistableBundle()
                                 val serializedData = Gson().toJson(item.data)
@@ -98,8 +107,8 @@ class FragmentPageData : Fragment(), Injectable {
                                     .setPersisted(true)
                                     .setPeriodic(15*60*1000)
 
-                                val myJobInfo: JobInfo = jobInfo.build()
-                                mScheduler?.schedule(myJobInfo)
+//                                val myJobInfo: JobInfo = jobInfo.build()
+//                                mScheduler?.schedule(myJobInfo)
                             }
 
                             Status.LOADING -> {
@@ -131,5 +140,17 @@ class FragmentPageData : Fragment(), Injectable {
                 }
             })
         }
+    }
+
+    fun executeWorkManagerFetch(data : FacebookPageData?, context: Context){
+        val periodicWorkRequest =
+            PeriodicWorkRequest.Builder(SendDataWorkManager::class.java, 16, TimeUnit.MINUTES)
+                .setInputData(Data.Builder().putString("serializedData", Gson().toJson(data)).build())
+                .setInitialDelay(10, TimeUnit.SECONDS)
+                .build()
+
+        val workManager = WorkManager.getInstance(context)
+
+        workManager.enqueue(periodicWorkRequest)
     }
 }
