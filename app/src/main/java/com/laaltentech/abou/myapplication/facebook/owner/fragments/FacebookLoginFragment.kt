@@ -21,7 +21,7 @@ import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginResult
 import com.laaltentech.abou.myapplication.R
-import com.laaltentech.abou.myapplication.databinding.FragmentGameCentralInstructionsBinding
+import com.laaltentech.abou.myapplication.databinding.FragmentFacebookLoginBinding
 import com.laaltentech.abou.myapplication.di.Injectable
 import com.laaltentech.abou.myapplication.facebook.observer.FacebookProfileViewModel
 import com.laaltentech.abou.myapplication.facebook.observer.FacebookProfileViewModel.Companion.email
@@ -47,7 +47,7 @@ class FacebookLoginFragment : Fragment(), Injectable {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    lateinit var binding : FragmentGameCentralInstructionsBinding
+    lateinit var binding : FragmentFacebookLoginBinding
 
     lateinit var callbackManager : CallbackManager
 
@@ -63,7 +63,7 @@ class FacebookLoginFragment : Fragment(), Injectable {
     ): View {
         callbackManager = CallbackManager.Factory.create()
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_game_central_instructions, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_facebook_login, container, false)
         return binding.root
     }
 

@@ -9,7 +9,7 @@
         android:id="@+id/viewDetails"
         android:name="com.laaltentech.abou.myapplication.facebook.owner.fragments.FacebookLoginFragment"
         android:label="Details"
-        tools:layout="@layout/fragment_game_central_instructions">
+        tools:layout="@layout/fragment_facebook_login">
         <action
             android:id="@+id/action_viewDetails_to_facebookProfileFragment"
             app:destination="@id/facebookProfileFragment" />
