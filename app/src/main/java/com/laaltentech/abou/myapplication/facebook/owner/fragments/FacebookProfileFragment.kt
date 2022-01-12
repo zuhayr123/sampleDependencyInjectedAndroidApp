@@ -14,8 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.facebook.AccessToken
-import com.facebook.AccessTokenTracker
 import com.laaltentech.abou.myapplication.R
 import com.laaltentech.abou.myapplication.databinding.FragmentAndroidProfileBinding
 import com.laaltentech.abou.myapplication.di.Injectable
@@ -76,18 +74,6 @@ class FacebookProfileFragment: Fragment(), Injectable {
         Log.e("AccessToken", "The token is $accessToken and the userId is : $userId")
 
         binding.profileViewModel = newFacebookProfileViewModel
-
-        val accessTokenTracker = object : AccessTokenTracker() {
-            override fun onCurrentAccessTokenChanged(
-                oldAccessToken: AccessToken?,
-                currentAccessToken: AccessToken?
-            ) {
-                if(currentAccessToken == null){
-                    findNavController().popBackStack()
-                }
-                Log.e("LOGIN STATE", "STATUS CHANGED, $currentAccessToken")
-            }
-        }
 
         adapter = AdapterFacebookPageList(
             dataBindingComponent = DataBindingUtil.getDefaultComponent(),

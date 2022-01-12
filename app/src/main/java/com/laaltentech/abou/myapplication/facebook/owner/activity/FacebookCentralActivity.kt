@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import com.facebook.FacebookSdk
-import com.facebook.appevents.AppEventsLogger
 import com.laaltentech.abou.myapplication.R
 import com.laaltentech.abou.myapplication.databinding.ActivityFacebookLoginBinding
 import dagger.android.DispatchingAndroidInjector
@@ -26,8 +24,6 @@ class FacebookCentralActivity : AppCompatActivity(), HasSupportFragmentInjector 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_facebook_login)
-        FacebookSdk.sdkInitialize(applicationContext)
-        AppEventsLogger.activateApp(application)
     }
 
 }
